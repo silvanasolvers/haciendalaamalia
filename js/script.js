@@ -136,36 +136,22 @@
     }
 
     initHeroScrub();
+    initTimelineFill();
 
     setTimeout(() => window.ScrollTrigger.refresh(), 300);
   }
 
-  /* Línea de tiempo: scroll horizontal robusto + arrastrar para desplazar.
-     Sin pin de ScrollTrigger (evita desincronización en resize / scroll rápido). */
-  function initTimeline() {
-    const track = $("#tl-track");
-    if (!track) return;
-    let down = false, startX = 0, startScroll = 0, moved = false;
-    track.addEventListener("pointerdown", (e) => {
-      if (e.pointerType && e.pointerType !== "mouse") return; // touch usa scroll nativo
-      down = true; moved = false;
-      startX = e.clientX; startScroll = track.scrollLeft;
-      track.classList.add("dragging");
+  /* Línea de tiempo vertical: el hilo de latón se "desenrolla" con el scroll.
+     Scrub de ScrollTrigger (sin pin) → robusto y reversible. */
+  function initTimelineFill() {
+    if (!hasGSAP || !window.ScrollTrigger || reduce) return;
+    var fill = $("#tl-fill");
+    var rail = $(".timeline__rail");
+    if (!fill || !rail) return;
+    gsap.fromTo(fill, { scaleY: 0 }, {
+      scaleY: 1, ease: "none", transformOrigin: "top center",
+      scrollTrigger: { trigger: rail, start: "top 78%", end: "bottom 72%", scrub: true },
     });
-    track.addEventListener("pointermove", (e) => {
-      if (!down) return;
-      const dx = e.clientX - startX;
-      if (Math.abs(dx) > 4) moved = true;
-      track.scrollLeft = startScroll - dx;
-    });
-    const end = () => { down = false; track.classList.remove("dragging"); };
-    track.addEventListener("pointerup", end);
-    track.addEventListener("pointerleave", end);
-    track.addEventListener("pointercancel", end);
-    // Evita clicks fantasma tras un arrastre
-    track.addEventListener("click", (e) => {
-      if (moved) { e.preventDefault(); e.stopPropagation(); }
-    }, true);
   }
 
   /* ---------- CONTADORES ---------- */
@@ -325,7 +311,6 @@
     initCounters();
     buildCalendar();
     initForm();
-    initTimeline();
     // GSAP después de que el preloader libere el scroll
     if (document.body.classList.contains("is-loading")) {
       document.addEventListener("amalia:ready", initGSAP, { once: true });

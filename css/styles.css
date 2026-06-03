@@ -227,27 +227,25 @@ section{position:relative}
 .stat__num small{font-size:.5em;vertical-align:super}
 .stat__label{display:block;margin-top:.8rem;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--txt-d-soft);line-height:1.5}
 
-/* ---------- TIMELINE ---------- */
-.timeline{padding:clamp(5rem,12vh,9rem) 0;overflow:hidden}
-.timeline__head{padding:0 clamp(1.2rem,5vw,5rem);max-width:var(--maxw);margin:0 auto 3.5rem}
+/* ---------- TIMELINE (vertical: el pergamino se desenrolla al hacer scroll) ---------- */
+.timeline{padding:clamp(5rem,12vh,9rem) clamp(1.2rem,5vw,5rem)}
+.timeline__head{max-width:var(--maxw);margin:0 auto 3.5rem}
 .timeline__head h2{margin-top:1rem}
 .timeline__hint{margin-top:1.4rem;font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--brass-2)}
-.timeline__track{width:100%;overflow-x:auto;overflow-y:hidden;cursor:grab;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--brass-2) rgba(243,235,221,.08);padding-bottom:1.4rem}
-.timeline__track.dragging{cursor:grabbing;scroll-snap-type:none;user-select:none}
-.timeline__track::-webkit-scrollbar{height:4px}
-.timeline__track::-webkit-scrollbar-thumb{background:var(--brass-2);border-radius:4px}
-.timeline__track::-webkit-scrollbar-track{background:rgba(243,235,221,.08)}
-.timeline__rail{display:flex;gap:0;list-style:none;padding:0 clamp(1.2rem,5vw,5rem);width:max-content}
-.timeline__rail::after{content:"";flex:0 0 clamp(1.2rem,5vw,5rem)}
-.tl{flex:0 0 clamp(240px,26vw,340px);padding:2.5rem 2rem 2.5rem 0;margin-right:2rem;border-top:1px solid var(--line-d);position:relative;scroll-snap-align:start}
-.tl h3,.tl p,.tl__year{pointer-events:none}
-.tl::before{content:"";position:absolute;top:-5px;left:0;width:9px;height:9px;border-radius:50%;background:var(--sepia)}
-.tl--mark::before{background:var(--brass);box-shadow:0 0 0 4px rgba(200,160,90,.18)}
-.tl--now::before{background:var(--cereza);box-shadow:0 0 0 4px rgba(162,52,32,.22)}
-.tl__year{display:block;font-family:var(--serif);font-size:clamp(1.7rem,2.6vw,2.4rem);font-weight:300;color:var(--brass);margin-bottom:.7rem}
+.timeline__track{position:relative;max-width:920px;margin:0 auto;padding-left:56px}
+.timeline__axis{position:absolute;left:18px;top:6px;bottom:6px;width:2px;background:rgba(243,235,221,.13);border-radius:2px;overflow:hidden}
+.timeline__fill{display:block;position:absolute;left:0;top:0;width:100%;height:100%;background:linear-gradient(180deg,var(--brass-soft),var(--brass-2));transform:scaleY(0);transform-origin:top center;will-change:transform}
+.timeline__rail{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:clamp(2.4rem,6vh,4rem)}
+.tl{position:relative}
+.tl::before{content:"";position:absolute;left:-44px;top:.3em;width:14px;height:14px;border-radius:50%;background:var(--ink);border:2px solid var(--sepia);box-shadow:0 0 0 5px var(--ink);transition:border-color .6s var(--ease),background .6s var(--ease)}
+.tl.in::before{border-color:var(--brass);background:var(--brass)}
+.tl--mark.in::before{box-shadow:0 0 0 5px var(--ink),0 0 16px 2px rgba(200,160,90,.55)}
+.tl--now::before,.tl--now.in::before{border-color:var(--cereza);background:var(--cereza)}
+.tl__year{display:block;font-family:var(--serif);font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:300;color:var(--brass);line-height:1;margin-bottom:.55rem}
 .tl--mark .tl__year{color:var(--brass-soft)}
-.tl h3{font-family:var(--serif);font-weight:400;font-size:1.25rem;margin-bottom:.6rem;color:var(--txt-d)}
-.tl p{font-size:.92rem;color:var(--txt-d-soft);line-height:1.6;max-width:30ch}
+.tl--now .tl__year{color:var(--cereza)}
+.tl h3{font-family:var(--serif);font-weight:400;font-size:clamp(1.2rem,2vw,1.5rem);margin-bottom:.5rem;color:var(--txt-d)}
+.tl p{font-size:.96rem;color:var(--txt-d-soft);line-height:1.65;max-width:54ch}
 
 /* ---------- AMALIA ---------- */
 .amalia{display:grid;grid-template-columns:.85fr 1fr;gap:clamp(2rem,6vw,6rem);align-items:center;padding:clamp(5rem,13vh,10rem) clamp(1.2rem,5vw,5rem);max-width:var(--maxw);margin:0 auto}
@@ -490,4 +488,5 @@ a.info-block__v:hover{color:var(--brass)}
   *{animation:none!important;transition-duration:.01ms!important}
   .reveal{opacity:1;transform:none}
   .reveal-img img{transform:none}
+  .timeline__fill{transform:scaleY(1)}
 }
