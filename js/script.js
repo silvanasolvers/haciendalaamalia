@@ -147,6 +147,7 @@
     if (!track) return;
     let down = false, startX = 0, startScroll = 0, moved = false;
     track.addEventListener("pointerdown", (e) => {
+      if (e.pointerType && e.pointerType !== "mouse") return; // touch usa scroll nativo
       down = true; moved = false;
       startX = e.clientX; startScroll = track.scrollLeft;
       track.classList.add("dragging");
@@ -247,24 +248,34 @@
   }
 
   /* ---------- HERO: scroll-scrub de video (secuencia de frames en <img>) ---------- */
-  var HERO_FRAMES = 120;
+  // Set de frames según dispositivo: ≤1024px (móvil/tablet/landscape) = liviano (60 @ 1024px),
+  // desktop = 120 @ 1280px. Cubre teléfonos en horizontal y tablets sin bajar 9 MB.
+  var HERO_MOBILE = window.matchMedia("(max-width: 1024px)").matches;
+  var HERO_DIR = HERO_MOBILE ? "assets/hero-frames-m" : "assets/hero-frames";
+  var HERO_FRAMES = HERO_MOBILE ? 60 : 120;
   var heroSeq = $("#hero-seq");
   var heroPreload = [];
   var heroMode = "scrub";
-  var heroCurrent = 0;
+  var heroCurrent = -1;
 
   function heroFramePath(i) {
-    return "assets/hero-frames/frame_" + String(i).padStart(4, "0") + ".jpg";
+    return HERO_DIR + "/frame_" + String(i).padStart(4, "0") + ".jpg";
   }
   function heroIsStatic() {
-    return reduce || !hasGSAP || !heroSeq || window.innerWidth < 880;
+    // El scrub SÍ corre en móvil (touch). Solo estático si el usuario pide menos
+    // movimiento, está en ahorro de datos, o no hay GSAP.
+    if (reduce) return true;
+    var c = navigator.connection || navigator.webkitConnection;
+    if (c && c.saveData) return true;
+    return !hasGSAP || !heroSeq;
   }
   function preloadHeroFrames() {
-    // Precarga + decodifica todos los frames para que el cambio de src no parpadee.
+    // Calienta la caché HTTP. NO forzamos decode de todos los frames: mantener
+    // cientos de bitmaps decodificados (1280x720 ≈ 3.7 MB c/u) reventaría la RAM en móvil.
+    // El navegador decodifica bajo demanda al asignar src y gestiona su propia caché.
     for (var i = 0; i < HERO_FRAMES; i++) {
       var img = new Image();
       img.src = heroFramePath(i + 1);
-      if (img.decode) { img.decode().catch(function () {}); }
       heroPreload.push(img);
     }
   }
@@ -277,6 +288,8 @@
   function initHero() {
     var hero = $(".hero");
     if (!hero) return;
+    // Poster del set correcto (en móvil evita arrastrar el frame desktop del HTML).
+    if (HERO_MOBILE && heroSeq) heroSeq.src = heroFramePath(1);
     if (heroIsStatic()) {
       heroMode = "static";
       hero.classList.add("hero--static");
