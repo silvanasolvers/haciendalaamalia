@@ -474,13 +474,24 @@ a.info-block__v:hover{color:var(--brass)}
 .map-link:hover{color:var(--brass-soft)}
 
 /* ---------- FOOTER ---------- */
-.foot{background:#0a0705;padding:clamp(3rem,7vh,5rem) clamp(1.2rem,5vw,5rem) 2.5rem;display:grid;grid-template-columns:1.4fr 1fr;gap:2.5rem;border-top:1px solid var(--line-d)}
+.foot{background:#0a0705;padding:clamp(3rem,7vh,5rem) clamp(1.2rem,5vw,5rem) 2.5rem;border-top:1px solid var(--line-d)}
+.foot__cols{display:grid;grid-template-columns:1.3fr .8fr 1.3fr;gap:2.5rem}
 .foot__mark{font-family:var(--serif);font-size:1.5rem;color:var(--paper);letter-spacing:.04em;display:block}
 .foot__tag{font-size:.82rem;color:var(--txt-d-soft);margin-top:.7rem;display:block;letter-spacing:.04em}
-.foot__nav{display:flex;flex-direction:column;gap:.8rem}
+.foot__contact{list-style:none;margin:1.4rem 0 0;padding:0;display:flex;flex-direction:column;gap:.5rem}
+.foot__contact li,.foot__contact a{font-size:.84rem;color:var(--txt-d-soft);letter-spacing:.02em}
+.foot__contact a{transition:color .3s}
+.foot__contact a:hover{color:var(--brass)}
+.foot__nav{display:flex;flex-direction:column;gap:.7rem}
+.foot__navhead{font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:var(--brass-2);margin-bottom:.35rem}
 .foot__nav a{font-size:.88rem;color:var(--txt-d-soft);transition:color .3s}
 .foot__nav a:hover{color:var(--brass)}
-.foot__legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding-top:2rem;margin-top:1rem;border-top:1px solid var(--line-d);font-size:.78rem;color:var(--txt-d-soft)}
+.foot__solvers{display:flex;flex-direction:column;gap:.85rem;align-items:flex-start}
+.foot__solvers-mark{font-family:var(--serif);font-size:1.5rem;letter-spacing:.14em;color:var(--brass)}
+.foot__solvers p{font-size:.84rem;color:var(--txt-d-soft);line-height:1.65;margin:0}
+.foot__solvers-link{font-size:.86rem;color:var(--brass);border-bottom:1px solid var(--brass-2);padding-bottom:1px;transition:color .3s}
+.foot__solvers-link:hover{color:var(--brass-soft)}
+.foot__legal{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding-top:2rem;margin-top:2.5rem;border-top:1px solid var(--line-d);font-size:.78rem;color:var(--txt-d-soft)}
 
 /* ---------- WHATSAPP FLOAT ---------- */
 .wa-float{position:fixed;right:clamp(1rem,3vw,2rem);bottom:clamp(1rem,3vw,2rem);z-index:7000;width:58px;height:58px;border-radius:50%;background:#1f8c4d;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(0,0,0,.35);transition:transform .35s var(--ease),background .3s}
@@ -504,7 +515,7 @@ a.info-block__v:hover{color:var(--brass)}
   .dash__side{display:none}
   .sistema__feats{grid-template-columns:repeat(2,1fr)}
   .mesa__media{min-height:60vh}
-  .foot{grid-template-columns:1fr}
+  .foot__cols{grid-template-columns:1fr;gap:2.2rem}
 }
 @media (max-width:680px){
   .stats{grid-template-columns:repeat(2,1fr)}
