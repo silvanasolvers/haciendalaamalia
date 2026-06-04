@@ -429,6 +429,24 @@ a.mq-item:hover{color:var(--brass)}
   .step--l.reveal.in,.step--r.reveal.in{transform:none}
 }
 
+/* ---------- SERVICIOS (qué ofrecemos · conversión) ---------- */
+.servicios{padding:clamp(5rem,13vh,10rem) clamp(1.2rem,5vw,5rem);background:var(--ink)}
+.servicios__head{max-width:820px;margin:0 auto 3.5rem;text-align:center}
+.servicios__head .eyebrow::before{display:none}
+.servicios__head h2{margin:1rem 0 1.5rem}
+.servicios__head .lead{margin:0 auto;color:var(--txt-d-soft)}
+.servicios__grid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem}
+.svc{background:#120d08;border:1px solid var(--line-d);border-radius:7px;padding:clamp(1.6rem,2.5vw,2.2rem);transition:border-color .4s var(--ease)}
+.svc:hover{border-color:var(--brass-2)}
+.svc h3{font-family:var(--serif);font-weight:400;font-size:clamp(1.3rem,2vw,1.6rem);color:var(--paper);margin:0 0 1.1rem;padding-bottom:.9rem;border-bottom:1px solid var(--line-d)}
+.svc ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.75rem}
+.svc li{position:relative;padding-left:1.5rem;font-size:.95rem;color:var(--txt-d-soft);line-height:1.5}
+.svc li::before{content:"✦";position:absolute;left:0;top:.18em;color:var(--brass-2);font-size:.72em}
+.servicios__note{max-width:720px;margin:3.2rem auto 0;text-align:center;border-top:1px solid var(--line-d);padding-top:2.6rem}
+.servicios__note p{font-size:1.02rem;color:var(--txt-d-soft);line-height:1.7;margin:0 auto 1.7rem;max-width:60ch}
+.servicios__note strong{color:var(--paper);font-weight:600}
+@media (max-width:680px){.servicios__grid{grid-template-columns:1fr}}
+
 /* ---------- CIERRE ---------- */
 .cierre{padding:clamp(5rem,13vh,10rem) clamp(1.2rem,5vw,5rem)}
 .cierre__top{text-align:center;max-width:var(--maxw);margin:0 auto 4rem}
